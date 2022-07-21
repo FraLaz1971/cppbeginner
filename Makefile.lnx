@@ -1,0 +1,40 @@
+CC=gcc -g 
+CXX=g++ -g 
+LD=g++ 
+CXXFLAGS = 
+RM = rm -f
+MV = mv 
+CP = cp 
+MAKE = make
+SRC = $(wildcard src/*.cpp)
+OBJ = *.o
+CPPFLAGS =
+LIBS = 
+LDFLAGS = 
+EEXT=
+OEXT=.o
+
+
+.PHONY: clean distclean
+
+TARGETS = complex gcd-tester
+
+all: $(TARGETS)
+
+complex: complexx.h
+	$(CXX) -o complex complex.cpp
+
+gcd.o: gcd.cpp gcd.h
+	$(CXX) -c $<
+
+gcd-tester.o: gcd-tester.cpp gcd.cpp gcd.h
+	$(CXX) -c $<
+
+gcd-tester: gcd-tester.o gcd.o
+	$(CXX) $ -o $@  $^
+	
+clean:
+	$(RM) $(OBJ)
+
+distclean: clean
+	$(RM) $(TARGETS) Makefile
