@@ -17,22 +17,37 @@ OEXT=.o
 
 .PHONY: clean distclean
 
-TARGETS = complex gcd-tester
+TARGETS = complex gcd-tester gcd-tester_e factorial
 
 all: $(TARGETS)
 
-complex: complexx.h
-	$(CXX) -o complex complex.cpp
+complex: complex.cpp complexx.h
+	$(CXX) -o $@ $^
 
 gcd.o: gcd.cpp gcd.h
+	$(CXX) -c $<
+
+gcd_e.o: gcd_e.cpp gcd.h
 	$(CXX) -c $<
 
 gcd-tester.o: gcd-tester.cpp gcd.cpp gcd.h
 	$(CXX) -c $<
 
+gcd-tester_e.o: gcd-tester_e.cpp gcd_e.cpp gcd.h
+	$(CXX) -c $<
+
+fac.o: fac.cpp fac.h
+	$(CXX) -c $<
+
 gcd-tester: gcd-tester.o gcd.o
-	$(CXX) $ -o $@  $^
+	$(CXX)  -o $@  $^
 	
+gcd-tester_e: gcd-tester_e.o gcd_e.o
+	$(CXX)  -o $@  $^
+
+factorial: factorial.o fac.o
+	$(CXX)  -o $@  $^
+
 clean:
 	$(RM) $(OBJ)
 
